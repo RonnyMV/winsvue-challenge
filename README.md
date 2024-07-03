@@ -190,7 +190,8 @@ Na janela de Propriedades do Sistema, clique em "Variáveis de Ambiente".
 
 Em "Variáveis do sistema", encontre e selecione a variável Path, depois clique em "Editar".
 
-Clique em "Novo" e adicione o caminho para a pasta onde você extraiu o Lua. Por exemplo, ```C:\Lua.```
+Clique em "Novo" e adicione o caminho para a pasta onde você extraiu o Lua. Por exemplo, 
+
 
 Clique em "OK" para fechar todas as janelas.
 
@@ -199,18 +200,75 @@ Abra o Prompt de Comando (```pressione Win + R, digite cmd e pressione Enter``` 
 
 Digite o comando abaixo:
 
-``lua -v ``
+```lua
+    lua -v 
+```
 
 Você deve ver algo parecido com: 
 
-``Lua 5.4.4 Copyright (C) 1994-2020 Lua.org, PUC-Rio.``
+``Lua 5.3.6 Copyright (C) 1994-2020 Lua.org, PUC-Rio.``
 
 ### Passo 5: Executar o script
  - No terminal, dentro da pasta aonde está o script, digite os eguinte comando:
 
- - ``init main.lua``
- - Deverá aparecer este log no terminal:; 
- - ![Imgur Image](https://imgur.com/VXjVfCQ)
+ ```lua
+    lua main.lua
+```
 
+ **Deverá aparecer este log no terminal:**; 
+ - ![imgur IMG](https://i.imgur.com/bURmtcb.png)
 
+ Chamei novamente a função  ``teamsModule.requeueGroups(Queue, teams)`` para **simular** uma nova chamada do mesmo time para uma nova partida encontrada.
+
+## Descrição dos módulos
+ ### main.lua
+O script principal **``main.lua``** realiza as seguintes tarefas:
+
+**1.** Importa os módulos queue e teams.
+
+**2.** Define uma função fictícia ``startMatch`` para iniciar uma partida entre dois times.
+- **2.1** O parametro ``isNextMatch`` é utilizado apenas ao terminar a partida, simulando uma nova partida.
+
+**3.** Forma os times a partir de uma fila utilizando a função ``formTeams`` do módulo teams.
+
+**4.** Verifica se há jogadores suficientes para formar dois times completos.
+
+**5.** Inicia a partida se os times estiverem completos.
+
+**6.** Reenfileira os grupos e inicia uma nova partida com os mesmos grupos.
+
+ ### queue.lua
+A ``queue``  contém os grupos de jogadores e lógica de manipulação da fila.
+
+```lua
+addGroupToQueue(queue, groupId, group)
+``` 
+- **Descrição:** Adiciona um grupo à fila.
+
+```lua
+removeGroupFromQueue(queue, groupId)
+``` 
+- **Descrição:** Remove um grupo da fila.
+
+ ```lua
+getQueueSize(queue)
+``` 
+- **Descrição:** Retorna o tamanho atual da fila.
+ 
+
+ ### teams.lua
+O ``teams``  contém exporta funções de manipulação dos times, vejamos:
+
+ ```lua
+formTeams(queue)
+``` 
+- **Descrição:** Forma duas equipes (atacantes e defensores) a partir de uma fila de grupos de jogadores.
+
+ ```lua
+requeueGroups(queue, teams)
+``` 
+- **Descrição:** Reenfileira os jogadores nas suas respectivas filas de grupos após uma partida.
+
+ ## Licença
+Este projeto está licenciado sob os termos da licença MIT.
 
